@@ -1,0 +1,14 @@
+{
+  "name": "watcher-api",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "go run ./cmd/main.go",
+    "build": "go build -o bin/server ./cmd/main.go",
+    "start": "./bin/server",
+    "test": "go test ./...",
+    "lint": "go vet ./...",
+    "openapi:generate": "go generate ./internal/apigen",
+    "openapi:validate": "go run github.com/getkin/kin-openapi/cmd/validate@latest internal/httpapi/openapi.yaml"
+  }
+}
