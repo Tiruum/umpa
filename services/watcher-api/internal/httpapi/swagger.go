@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-//go:embed docs/swagger.yaml
+//go:embed docs/*
 var swaggerFS embed.FS
 
 func swaggerSpecHandler(w http.ResponseWriter, r *http.Request) {

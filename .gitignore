@@ -22,6 +22,10 @@ coverage
 # Build Outputs
 dist
 
+# Go service local artifacts
+services/watcher-api/main
+services/watcher-api/*.db
+
 # Debug
 npm-debug.log*
 
