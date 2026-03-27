@@ -1,0 +1,21 @@
+package httpapi
+
+import (
+	"log/slog"
+	"net/http"
+
+	"github.com/go-chi/chi/v5"
+	"umpa/services/{{name}}-api/internal/httpapi/generated"
+)
+
+func NewRouter(logger *slog.Logger) http.Handler {
+	r := chi.NewRouter()
+	r.Use(requestLogger(logger))
+
+	server := NewServer()
+	strictHandler := generated.NewStrictHandler(server, nil)
+
+	return generated.HandlerWithOptions(strictHandler, generated.ChiServerOptions{
+		BaseRouter: r,
+	})
+}

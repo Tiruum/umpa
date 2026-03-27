@@ -1,0 +1,46 @@
+# {{name}}-api
+
+Beginner-friendly, production-style Go API service scaffold for Turborepo.
+
+## What is included
+
+- `cmd/{{name}}-api`: clean entrypoint with graceful shutdown
+- `internal/config`: env-driven config
+- `internal/observability`: structured logger
+- `internal/httpapi`: router, middleware, API implementation
+- `api/openapi.yaml`: single source of truth for API contract
+- Go server types/interfaces generated with `oapi-codegen`
+- Frontend SDK generated into `packages/{{name}}-sdk`
+
+## First run
+
+```bash
+pnpm --filter @umpa/{{name}}-api gen
+pnpm --filter @umpa/{{name}}-api dev
+```
+
+## Quality loop
+
+```bash
+pnpm --filter @umpa/{{name}}-api format
+pnpm --filter @umpa/{{name}}-api lint
+pnpm --filter @umpa/{{name}}-api test
+pnpm --filter @umpa/{{name}}-api build
+```
+
+## Turbo usage
+
+```bash
+pnpm turbo run test --filter=@umpa/{{name}}-api
+pnpm turbo run build --filter=@umpa/{{name}}-api
+```
+
+## API contract workflow
+
+1. Update `api/openapi.yaml`.
+2. Run `pnpm --filter @umpa/{{name}}-api gen`.
+3. Backend interfaces/models and frontend SDK are regenerated from one source.
+
+## Environment
+
+Copy `.env.example` into `.env` and adjust values.

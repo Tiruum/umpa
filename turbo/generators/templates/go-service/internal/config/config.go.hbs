@@ -1,0 +1,51 @@
+package config
+
+import (
+	"fmt"
+	"os"
+	"time"
+)
+
+type Config struct {
+	Address         string
+	LogLevel        string
+	ReadTimeout     time.Duration
+	WriteTimeout    time.Duration
+	IdleTimeout     time.Duration
+	ShutdownTimeout time.Duration
+}
+
+func Load() Config {
+	port := getEnv("APP_PORT", "{{port}}")
+	readTimeout := parseDuration("READ_TIMEOUT", "5s")
+	writeTimeout := parseDuration("WRITE_TIMEOUT", "10s")
+	idleTimeout := parseDuration("IDLE_TIMEOUT", "60s")
+	shutdownTimeout := parseDuration("SHUTDOWN_TIMEOUT", "10s")
+
+	return Config{
+		Address:         fmt.Sprintf(":%s", port),
+		LogLevel:        getEnv("LOG_LEVEL", "info"),
+		ReadTimeout:     readTimeout,
+		WriteTimeout:    writeTimeout,
+		IdleTimeout:     idleTimeout,
+		ShutdownTimeout: shutdownTimeout,
+	}
+}
+
+func getEnv(key, fallback string) string {
+	value := os.Getenv(key)
+	if value == "" {
+		return fallback
+	}
+	return value
+}
+
+func parseDuration(key, fallback string) time.Duration {
+	value := getEnv(key, fallback)
+	duration, err := time.ParseDuration(value)
+	if err != nil {
+		parsedFallback, _ := time.ParseDuration(fallback)
+		return parsedFallback
+	}
+	return duration
+}

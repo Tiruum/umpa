@@ -1,0 +1,37 @@
+package httpapi
+
+import (
+	"context"
+	"time"
+
+	"umpa/services/{{name}}-api/internal/httpapi/generated"
+)
+
+type Server struct{}
+
+func NewServer() *Server {
+	return &Server{}
+}
+
+func (s *Server) GetHealthz(_ context.Context, _ generated.GetHealthzRequestObject) (generated.GetHealthzResponseObject, error) {
+	return generated.GetHealthz200JSONResponse{Status: "ok"}, nil
+}
+
+func (s *Server) GetReadyz(_ context.Context, _ generated.GetReadyzRequestObject) (generated.GetReadyzResponseObject, error) {
+	return generated.GetReadyz200JSONResponse{Status: "ready"}, nil
+}
+
+func (s *Server) GetV1Watchers(_ context.Context, _ generated.GetV1WatchersRequestObject) (generated.GetV1WatchersResponseObject, error) {
+	return generated.GetV1Watchers200JSONResponse{
+		Items: []generated.Watcher{
+			{
+				Id:           "w_1",
+				Name:         "Main page watcher",
+				Url:          "https://tools.umpa.digital",
+				Status:       "active",
+				LastChecked:  time.Now().Add(-5 * time.Minute),
+				ChangesCount: 2,
+			},
+		},
+	}, nil
+}

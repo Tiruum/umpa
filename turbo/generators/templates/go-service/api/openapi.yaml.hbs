@@ -1,0 +1,88 @@
+openapi: 3.0.3
+info:
+  title: {{name}} API
+  version: 1.0.0
+servers:
+  - url: http://localhost:{{port}}
+paths:
+  /healthz:
+    get:
+      operationId: getHealthz
+      summary: Liveness probe
+      responses:
+        '200':
+          description: Service is alive
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+  /readyz:
+    get:
+      operationId: getReadyz
+      summary: Readiness probe
+      responses:
+        '200':
+          description: Service is ready
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+  /v1/watchers:
+    get:
+      operationId: getV1Watchers
+      summary: List watchers
+      responses:
+        '200':
+          description: List of watchers
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WatchersResponse'
+components:
+  schemas:
+    HealthResponse:
+      type: object
+      required:
+        - status
+      properties:
+        status:
+          type: string
+          example: ok
+    Watcher:
+      type: object
+      required:
+        - id
+        - name
+        - url
+        - status
+        - lastChecked
+        - changesCount
+      properties:
+        id:
+          type: string
+          example: w_1
+        name:
+          type: string
+          example: Main page watcher
+        url:
+          type: string
+          format: uri
+          example: https://tools.umpa.digital
+        status:
+          type: string
+          enum: [active, paused]
+        lastChecked:
+          type: string
+          format: date-time
+        changesCount:
+          type: integer
+          minimum: 0
+    WatchersResponse:
+      type: object
+      required:
+        - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Watcher'
