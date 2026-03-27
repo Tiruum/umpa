@@ -10,7 +10,7 @@ import (
 // ServeMux в Go 1.22 умеет сразу парсить методы "POST /path".
 func RegisterRoutes(mux *http.ServeMux, watchService *watch.Service) {
 	mux.HandleFunc("GET /healthz", healthHandler)
-	mux.HandleFunc("GET /openapi.yaml", openapiSpecHandler)
+	mux.HandleFunc("GET /swagger.yaml", swaggerSpecHandler)
 	mux.HandleFunc("GET /docs", swaggerUIHandler)
 
 	// REST API для работы с сущностью Watches 

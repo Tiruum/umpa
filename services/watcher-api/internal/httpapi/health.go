@@ -11,6 +11,11 @@ type healthResponse struct {
 }
 
 // healthHandler - эндпоинт для оркестраторов (Kubernetes / Docker) "я всё еще жив?"
+// @Summary Health check
+// @Tags health
+// @Produce json
+// @Success 200 {object} healthResponse
+// @Router /healthz [get]
 func healthHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)

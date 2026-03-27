@@ -1,0 +1,193 @@
+basePath: /
+definitions:
+  httpapi.healthResponse:
+    properties:
+      status:
+        type: string
+    type: object
+  watch.CreateWatchInput:
+    properties:
+      name:
+        type: string
+      selector:
+        type: string
+      url:
+        type: string
+    type: object
+  watch.UpdateWatchInput:
+    properties:
+      name:
+        type: string
+      selector:
+        type: string
+      url:
+        type: string
+    type: object
+  watch.Watch:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      selector:
+        type: string
+      url:
+        type: string
+    type: object
+info:
+  contact: {}
+  description: Code-first API for watches management.
+  title: Watcher API
+  version: 1.0.0
+paths:
+  /api/watches:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/watch.Watch'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: List watches
+      tags:
+      - watches
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Create watch payload
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/watch.CreateWatchInput'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/watch.Watch'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Create watch
+      tags:
+      - watches
+  /api/watches/{id}:
+    delete:
+      parameters:
+      - description: Watch ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Delete watch by id
+      tags:
+      - watches
+    get:
+      parameters:
+      - description: Watch ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/watch.Watch'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Get watch by id
+      tags:
+      - watches
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Watch ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Update watch payload
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/watch.UpdateWatchInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/watch.Watch'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Update watch by id
+      tags:
+      - watches
+  /healthz:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/httpapi.healthResponse'
+      summary: Health check
+      tags:
+      - health
+swagger: "2.0"

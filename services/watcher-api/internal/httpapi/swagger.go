@@ -5,12 +5,12 @@ import (
 	"net/http"
 )
 
-//go:embed openapi.yaml
-var openAPIFS embed.FS
+//go:embed docs/swagger.yaml
+var swaggerFS embed.FS
 
-func openapiSpecHandler(w http.ResponseWriter, r *http.Request) {
+func swaggerSpecHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/yaml; charset=utf-8")
-	http.ServeFileFS(w, r, openAPIFS, "openapi.yaml")
+  http.ServeFileFS(w, r, swaggerFS, "docs/swagger.yaml")
 }
 
 func swaggerUIHandler(w http.ResponseWriter, r *http.Request) {
@@ -28,7 +28,7 @@ func swaggerUIHandler(w http.ResponseWriter, r *http.Request) {
     <script src="https://unpkg.com/swagger-ui-dist@5/swagger-ui-bundle.js"></script>
     <script>
       window.ui = SwaggerUIBundle({
-        url: '/openapi.yaml',
+        url: '/swagger.yaml',
         dom_id: '#swagger-ui'
       });
     </script>

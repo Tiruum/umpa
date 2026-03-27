@@ -1,3 +1,7 @@
+// @title Watcher API
+// @version 1.0.0
+// @description Code-first API for watches management.
+// @BasePath /
 package main
 
 import (

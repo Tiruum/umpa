@@ -8,7 +8,6 @@
     "start": "./bin/server",
     "test": "go test ./...",
     "lint": "go vet ./...",
-    "openapi:generate": "go generate ./internal/apigen",
-    "openapi:validate": "go run github.com/getkin/kin-openapi/cmd/validate@latest internal/httpapi/openapi.yaml"
+    "openapi:generate": "go run github.com/swaggo/swag/cmd/swag@v1.16.6 init -g cmd/main.go -d . -o ./internal/httpapi/docs --outputTypes yaml"
   }
 }
